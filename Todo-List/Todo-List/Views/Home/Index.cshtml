@@ -42,15 +42,20 @@
                     <h4 class="title">To-do List</h4>
                 </div>
 
+            <form asp-action="YourAction" asp-controller="YourController" method="post">
                 <div class="input-maincontainer">
                     <div class="input-box">
                         <div class="three-circles-container">
                             <div class="circle1"></div>
                             <div class="circle2"></div>
                             <div class="circle3"></div>
+                            <input type="text" placeholder="What is your next tasks?" class="input-field" name="task">
+                            <input type="datetime-local" id="dateTimeInput" class='date'>
+                            <button type="submit"><box-icon name='save' size='38px'></box-icon></button>
                         </div>
                     </div>
                 </div>
+            </form>
 
                 <div class="tasks-container">
                     <div class="input-box-tasks">
@@ -59,6 +64,8 @@
                         <div class="time-container">
                             <h3 class="tasks-time">09:00 am</h3>
                         </div>
+                        <box-icon name='edit-alt' size='38px' class='edit-icon'></box-icon>
+                        <box-icon name='trash' size='38px' color='red' class='delete-icon'></box-icon>
                     </div>
                     <div class="input-box-tasks">
                         <div class="tasks-circle2"></div>
@@ -66,6 +73,8 @@
                         <div class="time-container">
                             <h3 class="tasks-time">08:00 pm</h3>
                         </div>
+                        <box-icon name='edit-alt' size='38px' class='edit-icon'></box-icon>
+                        <box-icon name='trash' size='38px' color='red' class='delete-icon'></box-icon>
                     </div>
                     <div class="input-box-tasks">
                         <div class="tasks-circle3"></div>
@@ -73,6 +82,8 @@
                         <div class="time-container">
                             <h3 class="tasks-time">06:00 am</h3>
                         </div>
+                        <box-icon name='edit-alt' size='38px' class='edit-icon'></box-icon>
+                        <box-icon name='trash' size='38px' color='red' class='delete-icon'></box-icon>
                     </div>
                     <div class="input-box-tasks">
                         <div class="tasks-circle1"></div>
@@ -80,9 +91,14 @@
                         <div class="time-container">
                             <h3 class="tasks-time">04:00 am</h3>
                         </div>
+                        <box-icon name='edit-alt' size='38px' class='edit-icon'></box-icon>
+                        <box-icon name='trash' size='38px' color='red' class='delete-icon'></box-icon>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+
+
