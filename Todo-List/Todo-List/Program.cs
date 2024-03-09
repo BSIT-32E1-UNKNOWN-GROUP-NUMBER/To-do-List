@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using TodoListApp.Models;
+
 namespace Todo_List
 {
     public class Program
@@ -8,6 +11,10 @@ namespace Todo_List
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            // Add DbContext
+            builder.Services.AddDbContext<TaskContext>(options =>
+    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             var app = builder.Build();
 
