@@ -242,7 +242,7 @@
 }
 
 .input-field {
-    width: 750px;
+    width: 350px;
     background-color: #C1AFF5;
     border: none;
     outline: none;
@@ -251,13 +251,29 @@
     margin-top: -1%;
 }
 
+.select-input {
+    background-color: #C1AFF5;
+    border: none;
+    outline: none;
+    font-size: 19px;
+    font-family: Inter, sans-serif;
+    margin-top: -1%;
+    margin-left: 12%;
+}
+
+.save-icon:hover {
+    cursor: pointer;
+    transform: scale(1.2);
+
+}
+
 .input-field::placeholder{
     font-size: 24px;
     color: #4A4747;
 }
 
 .date {
-    margin-left: -10%;
+    margin-left: 2%;
     margin-right: 3%;
     border: none;
     outline: none;
