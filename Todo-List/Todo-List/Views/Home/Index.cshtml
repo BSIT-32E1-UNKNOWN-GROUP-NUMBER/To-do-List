@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<Todo_List.Models.TaskModel>
 
 <link rel="stylesheet" href="~/css/index.css">
 
@@ -45,6 +45,7 @@
                 </div>
 
                 <form asp-action="Create" asp-controller="Tasks" method="post">
+                    @Html.AntiForgeryToken()
                     <div class="input-maincontainer">
                         <div class="input-box">
                             <div class="three-circles-container">
@@ -53,11 +54,13 @@
                                 <div class="circle3"></div>
                                 <input type="text" placeholder="What is your next tasks?" class="input-field" name="Description">
                                 <select name="Category" class='select-input'>
+                                    <option value="">Choose Category</option>
                                     <option value="Personal">Personal</option>
                                     <option value="Freelance">Freelance</option>
                                     <option value="Work">Work</option>
                                 </select>
                                 <input type="datetime-local" id="dateTimeInput" class='date' name="DueDate">
+                                @* <button type="submit"><box-icon name='edit-save' size='38px' class='edit-save'></box-icon></button> *@
                                 <button type="submit"><box-icon name='save' size='38px' class='save-icon'></box-icon></button>
                             </div>
                         </div>
@@ -65,47 +68,97 @@
                 </form>
 
                 <div class="tasks-container">
-                    <div class="input-box-tasks">
-                        <div class="tasks-circle1"></div>
-                        <h3 class="tasks-text">Work out</h3>
-                        <div class="time-container">
-                            <h3 class="tasks-time">09:00 am</h3>
+                    @foreach (var task in Model)
+                    {
+                        <div class="input-box-tasks">
+                            <div class="tasks-circle @(task.Category == "Personal" ? "tasks-circle1" : task.Category == "Freelance" ? "tasks-circle2" : "tasks-circle3")"></div>
+                            <h3 class="tasks-text">@task.Description</h3>
+                            <div class="time-container">
+                                <h3 class="tasks-time">@task.DueDate.ToString("hh:mm tt")</h3>
+                            </div>
+                            <h3 class='category-text @(task.Category == "Personal" ? "category-text1" : task.Category == "Freelance" ? "category-text2" : "category-text3")'>@task.Category</h3>
+                            <input type="hidden" name="Id" value="" />
+                            <box-icon name='edit-alt' size='38px' class='edit-icon' data-id='@task.Id'></box-icon>
+                            <box-icon name='trash' size='38px' color='red' class='delete-icon' data-id='@task.Id'></box-icon>
                         </div>
-                        <box-icon name='edit-alt' size='38px' class='edit-icon'></box-icon>
-                        <box-icon name='trash' size='38px' color='red' class='delete-icon'></box-icon>
-                    </div>
-                    <div class="input-box-tasks">
-                        <div class="tasks-circle2"></div>
-                        <h3 class="tasks-text">Edit</h3>
-                        <div class="time-container">
-                            <h3 class="tasks-time">08:00 pm</h3>
-                        </div>
-                        <box-icon name='edit-alt' size='38px' class='edit-icon'></box-icon>
-                        <box-icon name='trash' size='38px' color='red' class='delete-icon'></box-icon>
-                    </div>
-                    <div class="input-box-tasks">
-                        <div class="tasks-circle3"></div>
-                        <h3 class="tasks-text">Meeting</h3>
-                        <div class="time-container">
-                            <h3 class="tasks-time">06:00 am</h3>
-                        </div>
-                        <box-icon name='edit-alt' size='38px' class='edit-icon'></box-icon>
-                        <box-icon name='trash' size='38px' color='red' class='delete-icon'></box-icon>
-                    </div>
-                    <div class="input-box-tasks">
-                        <div class="tasks-circle1"></div>
-                        <h3 class="tasks-text">Read book</h3>
-                        <div class="time-container">
-                            <h3 class="tasks-time">04:00 am</h3>
-                        </div>
-                        <box-icon name='edit-alt' size='38px' class='edit-icon'></box-icon>
-                        <box-icon name='trash' size='38px' color='red' class='delete-icon'></box-icon>
-                    </div>
+                    }                    
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+$(document).ready(function() {
+    $('.delete-icon').click(function() {
+        var taskId = parseInt($(this).data('id')); 
+
+        $.ajax({
+            url: '/Tasks/DeleteConfirmed/' + taskId,
+            type: 'POST',
+            data: {
+                __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val()
+            },
+            success: function(result) {
+                console.log('Task deleted, reloading page'); 
+                location.reload(); // Refresh the page
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.error(textStatus, errorThrown); 
+            }
+        });
+    });
+});
+</script>
+
+@* <script>
+    $('edit-save').submit(function(e) {
+        e.preventDefault(); // Prevent the form from being submitted normally
+
+        var taskId = $('input[name="Id"]').val();
+
+        if (taskId) { // If the task ID field has a value, update the task
+            $.ajax({
+                url: '/Tasks/Edit/' + taskId,
+                type: 'POST',
+                data: $(this).serialize(), // Serialize the form data
+                success: function(result) {
+                    location.reload(); // Reload the page to reflect the changes
+                }
+            });
+        } else { // If the task ID field does not have a value, create a new task
+            $.ajax({
+                url: '/Tasks/Create',
+                type: 'POST',
+                data: $(this).serialize(), // Serialize the form data
+                success: function(result) {
+                    location.reload(); // Reload the page to reflect the changes
+                }
+            });
+        }
+    });
+</script> *@
+
+@* <script>
+    $('.edit-icon').click(function() {
+        var taskId = $(this).data('id');
+
+        $.ajax({
+            url: '/Tasks/Edit/' + taskId,
+            type: 'GET',
+            success: function(result) {
+                // Populate the form fields with the task data
+                $('input[name="Description"]').val(result.description);
+                $('select[name="Category"]').val(result.category);
+                $('input[name="DueDate"]').val(result.dueDate);
+                $('input[name="Id"]').val(result.id);
+            }
+        });
+    });
+</script> *@
+
 
 
 
