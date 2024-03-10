@@ -2,20 +2,20 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 using Todo_List.Models;
-using Todo_List.Data; // Add this line
-using System.Linq; // Add this line
+using Todo_List.Data; 
+using System.Linq; 
 
 namespace Todo_List.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly TaskContext _context; // Add this line
+        private readonly TaskContext _context; 
 
-        public HomeController(ILogger<HomeController> logger, TaskContext context) // Modify this line
+        public HomeController(ILogger<HomeController> logger, TaskContext context) 
         {
             _logger = logger;
-            _context = context; // Add this line
+            _context = context; 
         }
 
         public IActionResult Index()

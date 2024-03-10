@@ -93,20 +93,20 @@
 <script>
 $(document).ready(function() {
     $('.delete-icon').click(function() {
-        var taskId = parseInt($(this).data('id')); // Parse the id to an integer
+        var taskId = parseInt($(this).data('id')); 
 
         $.ajax({
-            url: '/Tasks/DeleteConfirmed/' + taskId, // Include the id as a route parameter
+            url: '/Tasks/DeleteConfirmed/' + taskId,
             type: 'POST',
             data: {
                 __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val()
             },
             success: function(result) {
-                console.log('Task deleted, reloading page'); // Add this line
+                console.log('Task deleted, reloading page'); 
                 location.reload(); // Refresh the page
             },
             error: function(jqXHR, textStatus, errorThrown) {
-                console.error(textStatus, errorThrown); // Log any errors to the console
+                console.error(textStatus, errorThrown); 
             }
         });
     });
