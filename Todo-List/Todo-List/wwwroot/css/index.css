@@ -193,6 +193,9 @@
 
 .time-container {
     margin-left: 5%;
+    position: absolute;
+    right: 30%;
+    left: 55%;
 }
 
 .tasks-time {
