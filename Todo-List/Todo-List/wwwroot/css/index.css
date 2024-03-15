@@ -90,7 +90,8 @@
 .tasks-container {
     display: flex;
     flex-direction: column;
-    margin-left: 13%;
+    align-items: center;
+    margin-left: 12.8%;
     margin-top: 0%;
     margin-bottom: 2%;
     overflow-x: auto;
@@ -281,6 +282,21 @@
 
 }
 
+.save-edit-icon:hover {
+    cursor: pointer;
+    transform: scale(1.2);
+}
+
+.save-icon {
+    position: absolute;
+    top: 203px;
+}
+
+.save-edit-icon {
+    position: relative;
+    right: 20px;
+}
+
 .input-field::placeholder{
     font-size: 24px;
     color: #4A4747;
@@ -317,3 +333,6 @@ body {
     margin-top: -1%;
     color: #F0F41E;
 }
+
+
+

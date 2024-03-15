@@ -57,37 +57,65 @@ namespace Todo_List.Controllers
             return View(task);
         }
 
-        // POST: Tasks/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Description,DueDate,PriorityLevel,IsComplete,Category")] TaskModel task)
+        // GET: Tasks/GetTask/5
+        [HttpGet]
+        public async Task<IActionResult> GetTask(int id)
         {
-            if (id != task.Id)
+            var task = await _context.Tasks.FindAsync(id);
+
+            if (task == null)
             {
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            return Json(task);
+        }
+
+        // POST: Tasks/Edit/5
+        [HttpPost]
+        public async Task<IActionResult> Edit([FromBody]TaskModel task)
+        {
+            if (task == null || task.Id == 0)
             {
-                try
-                {
-                    _context.Update(task);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!TaskExists(task.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction("Index", "Home");
+                return BadRequest();
             }
-            return View(task);
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var existingTask = await _context.Tasks.FindAsync(task.Id);
+
+            if (existingTask == null)
+            {
+                return NotFound();
+            }
+
+            existingTask.Description = task.Description;
+            existingTask.DueDate = task.DueDate;
+            existingTask.PriorityLevel = task.PriorityLevel;
+            existingTask.CompletionStatus = task.CompletionStatus;
+            existingTask.Category = task.Category;
+
+            try
+            {
+                _context.Update(existingTask);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!TaskExists(task.Id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return Json(new { success = true });
         }
 
         // GET: Tasks/Delete/5

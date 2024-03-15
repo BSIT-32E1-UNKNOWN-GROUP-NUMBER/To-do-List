@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Todo_List</title>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/Todo_List.styles.css" asp-append-version="true" />
+    @* <link rel="stylesheet" href="~/Todo_List.styles.css" asp-append-version="true" /> *@
 </head>
 <body>
     
@@ -21,6 +21,10 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/delete.js" asp-append-version="true"></script>
+    <script src="~/js/getTask.js" asp-append-version="true"></script>
+    <script src="~/js/saveEdit.js" asp-append-version="true"></script>
+    <script src="~/js/editButton.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 
      <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
