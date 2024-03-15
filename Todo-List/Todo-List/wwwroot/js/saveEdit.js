@@ -2,17 +2,17 @@ $(document).ready(function () {
     $('.save-edit-icon').click(function (e) {
         e.preventDefault();
 
-        // Get the edited tasks from the input fields
+        
         var editedTasks = {
-            Id: $('.task-id').val(), // Get the id of the task from the hidden input field
+            Id: $('.task-id').val(), 
             Description: $('.input-field').val(),
             Category: $('.select-input').val(),
             DueDate: $('.date').val(),
-            PriorityLevel: $('.priority-level').val(), // Make sure this selector matches the actual HTML element
+            PriorityLevel: $('.priority-level').val(), 
             CompletionStatus: $('.completion-status').is(':checked')
         };
 
-        // Make an AJAX call to the server-side method
+        
         $.ajax({
             url: '/Tasks/Edit',
             type: 'POST',
